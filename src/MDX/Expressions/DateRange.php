@@ -6,6 +6,11 @@ use Carbon\Carbon;
 use Vasilisq\MdxQueryBuilder\MDX\Period;
 use Vasilisq\MdxQueryBuilder\MDX\Expression;
 
+/**
+ * Extracts a set of time members with specified drilldown
+ *
+ * @package Vasilisq\MdxQueryBuilder\MDX\Expressions
+ */
 class DateRange extends Expression
 {
     /** @var int */
@@ -20,6 +25,12 @@ class DateRange extends Expression
     /** @var Carbon */
     protected $end;
 
+    /**
+     * @param Carbon $startDate
+     * @param Carbon $endDate
+     * @param int $drilldown
+     * @param string $timeDimension
+     */
     public function __construct(
         Carbon $startDate,
         Carbon $endDate,
@@ -37,7 +48,11 @@ class DateRange extends Expression
         return parent::__construct("{{$startTimeMember} : {$endTimeMember}}");
     }
 
-    protected function carbonToTimeMember(Carbon $date)
+    /**
+     * @param Carbon $date
+     * @return string
+     */
+    protected function carbonToTimeMember(Carbon $date): string
     {
         $memberString = "[{$date->year}]";
 

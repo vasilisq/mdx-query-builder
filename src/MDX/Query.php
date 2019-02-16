@@ -4,11 +4,17 @@ namespace Vasilisq\MdxQueryBuilder\MDX;
 
 use Vasilisq\MdxQueryBuilder\CellSet;
 use Vasilisq\MdxQueryBuilder\MDX\Expressions\Raw;
-use Vasilisq\MdxQueryBuilder\MDX\Exceptions\MalformedMdxQuery;
 use Vasilisq\MdxQueryBuilder\OLAP\ConnectionInterface;
+use Vasilisq\MdxQueryBuilder\MDX\Exceptions\MalformedMdxQuery;
 
+/**
+ * QueryInterface implementation
+ *
+ * @package Vasilisq\MdxQueryBuilder\MDX
+ */
 class Query implements QueryInterface
 {
+    /** @var string */
     public const AS_PART = ' as ';
 
     /** @var array */
@@ -35,11 +41,17 @@ class Query implements QueryInterface
     /** @var ConnectionInterface */
     protected $connection;
 
+    /**
+     * @param ConnectionInterface $connection
+     */
     public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function withMember(string $alias, Expression $expression, ?string $formatString = null): QueryInterface
     {
         $this->withMembers[$alias] = new Raw($expression . (is_null($formatString) ? '' : ", FORMAT_STRING = '{$formatString}'"));
@@ -47,6 +59,9 @@ class Query implements QueryInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function withSet(string $alias, Expression $expression): QueryInterface
     {
         $this->withSets[$alias] = $expression;
@@ -54,6 +69,9 @@ class Query implements QueryInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function select($columns): QueryInterface
     {
         $columns = array_wrap($columns);
@@ -75,6 +93,9 @@ class Query implements QueryInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function by($rows): QueryInterface
     {
         $this->rows = array_merge($this->rows, array_wrap($rows));
@@ -82,25 +103,37 @@ class Query implements QueryInterface
         return $this;
     }
 
-    public function from($cube): QueryInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function from(string $cube): QueryInterface
     {
         $this->cube = $cube;
 
         return $this;
     }
 
-    public function where($clause): QueryInterface
+    /**
+     * {@inheritdoc}
+     */
+    public function where(Expression $clause): QueryInterface
     {
         $this->whereClauses = array_merge($this->whereClauses, array_wrap($clause));
 
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(): CellSet
     {
         return $this->connection->executeQuery($this);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toMDX(): string
     {
         if (empty($this->cube)) {
@@ -124,16 +157,26 @@ class Query implements QueryInterface
         return $this->sanitizeQuery($mdx);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getColumnAliases(): array
     {
         return $this->columnAliases;
     }
 
+    /**
+     * @param string $mdx
+     * @return string
+     */
     protected function sanitizeQuery(string $mdx): string
     {
         return trim(preg_replace('/\s+/', ' ', $mdx));
     }
 
+    /**
+     * @return string
+     */
     protected function withToMdx(): string
     {
         $with = '';
@@ -153,6 +196,9 @@ class Query implements QueryInterface
         return "WITH {$with}";
     }
 
+    /**
+     * @return string
+     */
     protected function columnsToMdx(): string
     {
         if (empty($this->columns)) {
@@ -162,6 +208,9 @@ class Query implements QueryInterface
         return implode(', ', $this->columns);
     }
 
+    /**
+     * @return string
+     */
     protected function rowsToMdx(): string
     {
         return implode(', ', $this->rows);

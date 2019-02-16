@@ -5,6 +5,11 @@ namespace Vasilisq\MdxQueryBuilder\MDX\Expressions;
 use Vasilisq\MdxQueryBuilder\MDX\Period;
 use Vasilisq\MdxQueryBuilder\MDX\Expression;
 
+/**
+ * Descendants by time dimension
+ *
+ * @package Vasilisq\MdxQueryBuilder\MDX\Expressions
+ */
 class Descendants extends Expression
 {
     /**
@@ -24,7 +29,11 @@ class Descendants extends Expression
         parent::__construct($expr);
     }
 
-    protected function periodToLevel($period)
+    /**
+     * @param int $period
+     * @return string
+     */
+    protected function periodToLevel(int $period): string
     {
         return ucfirst(Period::periodToString($period));
     }
