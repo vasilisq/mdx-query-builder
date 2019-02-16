@@ -1,0 +1,21 @@
+{
+    "name": "vasilisq/mdx-query-builder",
+    "description": "MDX Query Builder",
+    "authors": [
+        {
+            "name": "Andrey Vasilevskiy",
+            "email": "dronakasmart@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.11"
+    },
+    "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
+        "psr-4": {
+            "Vasilisq\\MdxQueryBuilder\\": "./src"
+        }
+    }
+}
