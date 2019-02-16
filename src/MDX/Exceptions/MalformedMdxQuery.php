@@ -2,7 +2,7 @@
 
 namespace Vasilisq\MdxQueryBuilder\MDX\Exceptions;
 
-class MalformedMdxQuery extends \LogicException
+class MalformedMdxQuery extends \RuntimeException
 {
 
 }
