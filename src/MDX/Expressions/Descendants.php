@@ -2,6 +2,7 @@
 
 namespace Vasilisq\MdxQueryBuilder\MDX\Expressions;
 
+use Vasilisq\MdxQueryBuilder\MDX\Period;
 use Vasilisq\MdxQueryBuilder\MDX\Expression;
 
 class Descendants extends Expression
@@ -25,6 +26,6 @@ class Descendants extends Expression
 
     protected function periodToLevel($period)
     {
-        return ucfirst(static::PERIOD_TO_STRING[$period]);
+        return ucfirst(Period::periodToString($period));
     }
 }

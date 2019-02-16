@@ -3,6 +3,7 @@
 namespace Vasilisq\MdxQueryBuilder\MDX\Expressions;
 
 use Carbon\Carbon;
+use Vasilisq\MdxQueryBuilder\MDX\Period;
 use Vasilisq\MdxQueryBuilder\MDX\Expression;
 
 class DateRange extends Expression
@@ -22,7 +23,7 @@ class DateRange extends Expression
     public function __construct(
         Carbon $startDate,
         Carbon $endDate,
-        $drilldown = Expression::PERIOD_DAY,
+        $drilldown = Period::DAY,
         $timeDimension = Expression::TIME_DIMENSION
     ) {
         $this->dimension = $timeDimension;
@@ -40,19 +41,19 @@ class DateRange extends Expression
     {
         $memberString = "[{$date->year}]";
 
-        if ($this->drilldown <= static::PERIOD_QUARTER) {
+        if ($this->drilldown <= Period::QUARTER) {
             $memberString .= ".[Q{$date->quarter}]";
         }
 
-        if ($this->drilldown <= static::PERIOD_MONTH) {
+        if ($this->drilldown <= Period::MONTH) {
             $memberString .= ".[{$date->month}]";
         }
 
-        if ($this->drilldown <= static::PERIOD_WEEK) {
+        if ($this->drilldown <= Period::WEEK) {
             $memberString .= ".[W{$date->weekOfYear}]";
         }
 
-        if ($this->drilldown === static::PERIOD_DAY) {
+        if ($this->drilldown === Period::DAY) {
             $memberString .= ".[D{$date->day}]";
         }
 
