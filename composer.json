@@ -17,5 +17,11 @@
         "psr-4": {
             "Vasilisq\\MdxQueryBuilder\\": "./src"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "mockery/mockery": "^1.2",
+        "phpunit/phpcov": "^5.0",
+        "codedungeon/phpunit-result-printer": "^0.26.0"
     }
 }
