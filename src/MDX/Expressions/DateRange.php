@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Vasilisq\MdxQueryBuilder\MDX\Expressions;
 
 use Carbon\Carbon;
@@ -34,8 +34,8 @@ class DateRange extends Expression
     public function __construct(
         Carbon $startDate,
         Carbon $endDate,
-        $drilldown = Period::DAY,
-        $timeDimension = Expression::TIME_DIMENSION
+        int $drilldown = Period::DAY,
+        string $timeDimension = Expression::TIME_DIMENSION
     ) {
         $this->dimension = $timeDimension;
         $this->drilldown = $drilldown;

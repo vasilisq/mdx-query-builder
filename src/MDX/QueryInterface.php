@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Vasilisq\MdxQueryBuilder\MDX;
 
 use Vasilisq\MdxQueryBuilder\CellSet;

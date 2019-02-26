@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Vasilisq\MdxQueryBuilder\MDX\Expressions;
 
 use Vasilisq\MdxQueryBuilder\MDX\Period;
@@ -16,7 +16,7 @@ class CurrentPeriod extends Expression
      * @param int $period
      * @param string $timeDimension
      */
-    public function __construct($period = Period::YEAR, $timeDimension = Expression::TIME_DIMENSION)
+    public function __construct(int $period = Period::YEAR, string $timeDimension = Expression::TIME_DIMENSION)
     {
         $formatString = '[yyyy]';
 

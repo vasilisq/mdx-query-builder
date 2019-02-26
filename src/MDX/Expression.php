@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Vasilisq\MdxQueryBuilder\MDX;
 
 /**
@@ -20,12 +20,12 @@ abstract class Expression
         $this->expression = $expression;
     }
 
-    public function getExpression()
+    public function getExpression(): string
     {
         return $this->expression;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->expression;
     }
