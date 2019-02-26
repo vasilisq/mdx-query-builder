@@ -24,10 +24,10 @@ class Query implements QueryInterface
     protected $whereClauses = [];
 
     /** @var array */
-    protected $withMembers;
+    protected $withMembers = [];
 
     /** @var array */
-    protected $withSets;
+    protected $withSets = [];
 
     /** @var string */
     protected $cube;
@@ -46,7 +46,7 @@ class Query implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function withMember(string $alias, Expression $expression, ?string $formatString = null): QueryInterface
+    public function withMember(string $alias, $expression, ?string $formatString = null): QueryInterface
     {
         $this->withMembers[$alias] = new Raw(
             $expression . (is_null($formatString) ? '' : ", FORMAT_STRING = '{$formatString}'")
@@ -58,7 +58,7 @@ class Query implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function withSet(string $alias, Expression $expression): QueryInterface
+    public function withSet(string $alias, $expression): QueryInterface
     {
         $this->withSets[$alias] = $expression;
 
@@ -98,7 +98,7 @@ class Query implements QueryInterface
     /**
      * {@inheritdoc}
      */
-    public function where(Expression $clause): QueryInterface
+    public function where($clause): QueryInterface
     {
         $this->whereClauses = array_merge($this->whereClauses, array_wrap($clause));
 

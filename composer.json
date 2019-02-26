@@ -15,7 +15,8 @@
             "src/Support/helpers.php"
         ],
         "psr-4": {
-            "Vasilisq\\MdxQueryBuilder\\": "./src"
+            "Vasilisq\\MdxQueryBuilder\\": "./src",
+            "Tests\\": "./tests"
         }
     },
     "require-dev": {

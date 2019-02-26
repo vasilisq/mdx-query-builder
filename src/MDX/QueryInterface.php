@@ -15,25 +15,25 @@ interface QueryInterface
      * Adds member to WITH clause
      *
      * @param string $alias
-     * @param Expression $expression
+     * @param string|Expression $expression
      * @param null|string $formatString
      * @return QueryInterface
      */
-    public function withMember(string $alias, Expression $expression, ?string $formatString = null): self;
+    public function withMember(string $alias, $expression, ?string $formatString = null): self;
 
     /**
      * Adds set to WITH clause
      *
      * @param string $alias
-     * @param Expression $expression
+     * @param string|Expression $expression
      * @return QueryInterface
      */
-    public function withSet(string $alias, Expression $expression): self;
+    public function withSet(string $alias, $expression): self;
 
     /**
      * Specifies columns axis
      *
-     * @param array|Expression $columns
+     * @param array|Expression|string $columns
      * @return QueryInterface
      */
     public function select($columns): self;
@@ -41,7 +41,7 @@ interface QueryInterface
     /**
      * Specifies rows axis
      *
-     * @param array|Expression $rows
+     * @param array|Expression|string $rows
      * @return QueryInterface
      */
     public function by($rows): self;
@@ -49,7 +49,7 @@ interface QueryInterface
     /**
      * Specifies cube name
      *
-     * @param $cube
+     * @param string $cube
      * @return QueryInterface
      */
     public function from(string $cube): self;
@@ -57,10 +57,10 @@ interface QueryInterface
     /**
      * Adds where clause
      *
-     * @param Expression $clause
+     * @param array|Expression|string $clause
      * @return QueryInterface
      */
-    public function where(Expression $clause): self;
+    public function where($clause): self;
 
     /**
      * Executes MDX query
