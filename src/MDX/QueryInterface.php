@@ -75,9 +75,4 @@ interface QueryInterface
      * @return string
      */
     public function toMDX(): string;
-
-    /**
-     * @return array
-     */
-    public function getColumnAliases(): array;
 }

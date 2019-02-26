@@ -21,9 +21,6 @@ class Query implements QueryInterface
     protected $rows = [];
 
     /** @var array */
-    protected $columnAliases = [];
-
-    /** @var array */
     protected $whereClauses = [];
 
     /** @var array */
@@ -51,7 +48,9 @@ class Query implements QueryInterface
      */
     public function withMember(string $alias, Expression $expression, ?string $formatString = null): QueryInterface
     {
-        $this->withMembers[$alias] = new Raw($expression . (is_null($formatString) ? '' : ", FORMAT_STRING = '{$formatString}'"));
+        $this->withMembers[$alias] = new Raw(
+            $expression . (is_null($formatString) ? '' : ", FORMAT_STRING = '{$formatString}'")
+        );
 
         return $this;
     }
@@ -115,6 +114,15 @@ class Query implements QueryInterface
     }
 
     /**
+     * @param string $mdx
+     * @return string
+     */
+    protected function sanitizeQuery(string $mdx): string
+    {
+        return trim(preg_replace('/\s+/', ' ', $mdx));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function toMDX(): string
@@ -134,27 +142,10 @@ class Query implements QueryInterface
         $mdx .= " FROM [{$this->cube}]";
 
         if (! empty($this->whereClauses)) {
-            $mdx .= ' WHERE '. implode(' * ', $this->whereClauses); // todo: or?
+            $mdx .= ' WHERE '. implode(' * ', $this->whereClauses);
         }
 
         return $this->sanitizeQuery($mdx);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumnAliases(): array
-    {
-        return $this->columnAliases;
-    }
-
-    /**
-     * @param string $mdx
-     * @return string
-     */
-    protected function sanitizeQuery(string $mdx): string
-    {
-        return trim(preg_replace('/\s+/', ' ', $mdx));
     }
 
     /**
