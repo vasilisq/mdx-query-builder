@@ -14,9 +14,6 @@ use Vasilisq\MdxQueryBuilder\MDX\Exceptions\MalformedMdxQuery;
  */
 class Query implements QueryInterface
 {
-    /** @var string */
-    public const AS_PART = ' as ';
-
     /** @var array */
     protected $columns = [];
 
@@ -74,21 +71,7 @@ class Query implements QueryInterface
      */
     public function select($columns): QueryInterface
     {
-        $columns = array_wrap($columns);
-        $aliases = [];
-
-        foreach ($columns as $columnIndex => $column) {
-            if ($asPosition = stripos($column, static::AS_PART)) {
-                $columnName = trim(substr($column, 0, $asPosition));
-                $columnAlias = trim(substr($column, $asPosition + strlen(static::AS_PART)));
-
-                $columns[$columnIndex] = $columnName;
-                $aliases[$columnIndex] = $columnAlias;
-            }
-        }
-
         $this->columns = array_merge($this->columns, array_wrap($columns));
-        $this->columnAliases = array_merge($this->columnAliases, array_wrap($aliases));
 
         return $this;
     }

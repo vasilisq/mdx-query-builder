@@ -8,7 +8,7 @@ if (! function_exists('array_wrap')) {
      *
      * @return array
      */
-    function array_wrap($value)
+    function array_wrap($value): array
     {
         if (is_null($value)) {
             return [];
