@@ -127,23 +127,11 @@ class Query implements QueryInterface
      */
     public function toMDX(): string
     {
-        if (empty($this->cube)) {
-            throw new MalformedMdxQuery('No cube selected!');
-        }
-
-        $mdx = $this->withToMdx() . "SELECT {{$this->columnsToMdx()}} ON COLUMNS";
-
-        if (! empty($this->rows)) {
-            $mdx .= ',';
-
-            $mdx .= "{{$this->rowsToMdx()}} ON ROWS";
-        }
-
-        $mdx .= " FROM [{$this->cube}]";
-
-        if (! empty($this->whereClauses)) {
-            $mdx .= ' WHERE '. implode(' * ', $this->whereClauses);
-        }
+        $mdx = $this->buildWith() .
+            $this->buildSelect() .
+            $this->buildRows() .
+            $this->buildFrom() .
+            $this->buildWhere();
 
         return $this->sanitizeQuery($mdx);
     }
@@ -151,7 +139,7 @@ class Query implements QueryInterface
     /**
      * @return string
      */
-    protected function withToMdx(): string
+    protected function buildWith(): string
     {
         $with = '';
 
@@ -173,20 +161,54 @@ class Query implements QueryInterface
     /**
      * @return string
      */
-    protected function columnsToMdx(): string
+    protected function buildSelect(): string
     {
         if (empty($this->columns)) {
             throw new MalformedMdxQuery('No columns passed!');
         }
 
-        return implode(', ', $this->columns);
+        $columns = implode(', ', $this->columns);
+
+        return "SELECT {{$columns}} ON COLUMNS";
     }
 
     /**
      * @return string
      */
-    protected function rowsToMdx(): string
+    protected function buildRows(): string
     {
-        return implode(', ', $this->rows);
+        if (empty($this->rows)) {
+            return '';
+        }
+
+        $rows = implode(', ', $this->rows);
+
+        return ", {{$rows}} ON ROWS";
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildFrom(): string
+    {
+        if (empty($this->cube)) {
+            throw new MalformedMdxQuery('No cube selected!');
+        }
+
+        return " FROM [{$this->cube}]";
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildWhere(): string
+    {
+        if (empty($this->whereClauses)) {
+            return '';
+        }
+
+        $where = implode(' * ', $this->whereClauses);
+
+        return " WHERE {$where}";
     }
 }
