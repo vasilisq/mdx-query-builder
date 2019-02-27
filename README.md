@@ -43,3 +43,5 @@ SELECT
 
 FROM [Sales]
 ```
+
+TODO: Abstract Query class from Mondrian dialect
