@@ -9,7 +9,6 @@ namespace Vasilisq\MdxQueryBuilder\MDX;
  */
 abstract class Expression
 {
-    // todo: move somewhere
     public const TIME_DIMENSION = 'Time';
 
     /** @var string */
