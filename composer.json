@@ -1,6 +1,7 @@
 {
     "name": "vasilisq/mdx-query-builder",
     "description": "MDX Query Builder",
+    "license": "MIT",
     "authors": [
         {
             "name": "Andrey Vasilevskiy",
