@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "nesbot/carbon": "^1.32"
+        "nesbot/carbon": "^1.32 || ^2.0"
     },
     "autoload": {
         "files": [
